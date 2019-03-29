@@ -4,6 +4,7 @@ import React from 'react'
 import axios from 'axios'
 import DefaultForm from './DefaultForm'
 import { requestMaker } from '../utils'
+import { ElectionInfo } from './index';
 
 class ElectionForm extends React.Component {
   constructor() {
@@ -25,11 +26,25 @@ class ElectionForm extends React.Component {
     console.log(this.state)
   }
   render() {
+    if (this.state.electionData.length < 0) {
+      return (
+
+        <DefaultForm
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          props={this.state} />
+      )
+    }
     return (
-      <DefaultForm
-        handleSubmit={this.handleSubmit}
-        handleChange={this.handleChange}
-        props={this.state} />
+      <div>
+        <DefaultForm
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          props={this.state} />
+        <ElectionInfo data={this.state.electionData} />
+
+      </div>
+
     )
   }
   handleChange(evt) {
