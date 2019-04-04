@@ -26,7 +26,7 @@ class ElectionForm extends React.Component {
     console.log(this.state)
   }
   render() {
-    if (this.state.electionData.length < 0) {
+    if (this.state.electionData.length === 0) {
       return (
 
         <DefaultForm
