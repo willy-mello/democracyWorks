@@ -11,10 +11,8 @@ router.get('/address:address/city:city/state:state', async function (req, res, n
     const state = req.params.state
 
     const googleParams = googleApiFormatter(address, city, state)
-    console.log('google params in ocd router', googleParams)
     const data = await rp(`https://www.googleapis.com/civicinfo/v2/representatives?address=${googleParams}&key=${GOOGLE_API_KEY}`)
     const turbovoteQuery = listOcd(Object.keys(JSON.parse(data).divisions))
-    console.log('turbovotequery', turbovoteQuery)
     const elections = await rp(turbovoteQuery)
     res.json(JSON.parse(elections))
 
@@ -25,20 +23,6 @@ router.get('/address:address/city:city/state:state', async function (req, res, n
 })
 
 
-// router.get('/country:country/state:state/place:place', async function (req, res, next) {
-//   try {
-//     let state = req.params.state
-//     let country = req.params.country
-//     let place = req.params.place
-//     console.log(apiCallMaker(country, state, place), 'apicall')
-//     const data = await rp(apiCallMaker(country, state, place))
-//     res.json(JSON.parse(data))
-
-//   } catch (error) {
-//     next(error)
-//   }
-
-// })
 
 router.use(function (err, req, res, next) {
   // set locals, only providing error in development

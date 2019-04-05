@@ -23,7 +23,9 @@ You will also see any lint errors in the console.
 
 * The form updates state and submits information correctly.
 
-* The requestMaker function from the utils correctly formats the request url and header.
+* utility functions do what they are supposed to.
+
+* data is fetched from both google civics info and turbovote.
 
 ### What Doesn't Work
 

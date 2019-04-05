@@ -24,7 +24,7 @@ class ElectionForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidUpdate() {
-    console.log(this.state)
+
   }
   render() {
     if (this.state.electionData.length === 0) {
@@ -67,20 +67,10 @@ class ElectionForm extends React.Component {
 
       const ocd = await axios.get(`http://localhost:8080/ocd` + googleRequestMaker(this.state))
       this.setState({ electionData: ocd.data })
-      // const electionData = await axios.get(`http://localhost:8080/elections` + listOcd(Object.keys(ocd.data.divisions)))
-      // this.setState({ electionData: electionData.data })
+
     } catch (error) {
       console.error(error)
     }
-    // try {
-    //   console.log(requestMaker(this.state))
-    //   const electionData = await axios.get(`http://localhost:8080/elections` + requestMaker(this.state))
-    //   this.setState({ electionData: electionData.data })
-    // } catch (error) {
-    //   console.log('error', error)
-    // }
-
-
   }
 }
 
