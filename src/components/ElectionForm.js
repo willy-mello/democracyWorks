@@ -3,7 +3,7 @@
 import React from 'react'
 import axios from 'axios'
 import DefaultForm from './DefaultForm'
-import { requestMaker } from '../utils'
+import { requestMaker, apiMakerVtwo, googleRequestMaker } from '../utils'
 import { ElectionInfo } from './index';
 
 class ElectionForm extends React.Component {
@@ -15,7 +15,8 @@ class ElectionForm extends React.Component {
       city: '',
       state: '',
       country: 'us',
-      electionData: []
+      electionData: [],
+      ocds: null
 
 
     }
@@ -41,7 +42,14 @@ class ElectionForm extends React.Component {
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
           props={this.state} />
-        <ElectionInfo data={this.state.electionData} />
+        {this.state.electionData.map((elem, idx) => {
+          return (
+            <div key={idx}>
+              <ElectionInfo data={elem} />
+            </div>
+          )
+        })}
+        {/* <ElectionInfo data={this.state.electionData} /> */}
 
       </div>
 
@@ -56,12 +64,19 @@ class ElectionForm extends React.Component {
   async handleSubmit(evt) {
     evt.preventDefault()
     try {
-      console.log(requestMaker(this.state))
-      const electionData = await axios.get(`http://localhost:8080/elections` + requestMaker(this.state))
-      this.setState({ electionData: electionData.data })
+
+      const ocd = await axios.get(`http://localhost:8080/ocd` + googleRequestMaker(this.state))
+      this.setState({ ocds: ocd.data })
     } catch (error) {
-      console.log('error', error)
+      console.error(error)
     }
+    // try {
+    //   console.log(requestMaker(this.state))
+    //   const electionData = await axios.get(`http://localhost:8080/elections` + requestMaker(this.state))
+    //   this.setState({ electionData: electionData.data })
+    // } catch (error) {
+    //   console.log('error', error)
+    // }
 
 
   }

@@ -12,7 +12,11 @@ const ElectionInfo = (props) => {
 
     <div>
       <p>rendering election INfo</p>
-      <p>{data[0]['polling-place-url']}</p>
+      <p>{data['polling-place-url']}</p>
+      //description
+      <p>{data['description']}</p>
+      //date
+      <p>{data['date']}</p>
     </div>
 
 

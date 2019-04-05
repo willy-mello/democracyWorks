@@ -4,12 +4,20 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors')
-
+// const { google } = require('googleapis')
 var indexRouter = require('./routes/index');
+const ocdRouter = require('./routes/ocd')
 
 var app = express();
 
-
+// function loadClient() {
+//   google.client.setApiKey('AIzaSyBUzALt9JiIgS3sJPgUwEP__B16u0Gglus')
+//   return google.client.load("https://content.googleapis.com/discovery/v1/apis/civicinfo/v2/rest")
+//     .then(function () { console.log("google client loaded for API"); },
+//       function (err) { console.error("Error loading google client for API", err); });
+// }
+// loadClient()
+// google.load("client");
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -21,6 +29,8 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/elections', indexRouter);
+
+app.use('/ocd', ocdRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
