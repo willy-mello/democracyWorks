@@ -34,6 +34,7 @@ const listOcd = (arr) => {
     uri: reqUrl + ocdIdList,
     headers: { Accept: 'application/json' }
   }
+  console.log('reqObj', reqObj)
   return reqObj
 }
 

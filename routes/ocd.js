@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const rp = require('request-promise')
-const { apiCallMaker, googleApiFormatter, apiMakerVtwo } = require('../src/utils')
+const { apiCallMaker, googleApiFormatter, apiMakerVtwo, listOcd } = require('../src/utils')
 const { GOOGLE_API_KEY } = require('../src/.secrets.js')
 
 router.get('/address:address/city:city/state:state', async function (req, res, next) {
@@ -13,7 +13,10 @@ router.get('/address:address/city:city/state:state', async function (req, res, n
     const googleParams = googleApiFormatter(address, city, state)
     console.log('google params in ocd router', googleParams)
     const data = await rp(`https://www.googleapis.com/civicinfo/v2/representatives?address=${googleParams}&key=${GOOGLE_API_KEY}`)
-    res.json(JSON.parse(data))
+    const turbovoteQuery = listOcd(Object.keys(JSON.parse(data).divisions))
+    console.log('turbovotequery', turbovoteQuery)
+    const elections = await rp(turbovoteQuery)
+    res.json(JSON.parse(elections))
 
 
   } catch (error) {

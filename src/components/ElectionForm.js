@@ -3,7 +3,7 @@
 import React from 'react'
 import axios from 'axios'
 import DefaultForm from './DefaultForm'
-import { requestMaker, apiMakerVtwo, googleRequestMaker } from '../utils'
+import { requestMaker, apiMakerVtwo, googleRequestMaker, listOcd } from '../utils'
 import { ElectionInfo } from './index';
 
 class ElectionForm extends React.Component {
@@ -15,8 +15,8 @@ class ElectionForm extends React.Component {
       city: '',
       state: '',
       country: 'us',
-      electionData: [],
-      ocds: null
+      electionData: []
+
 
 
     }
@@ -66,7 +66,9 @@ class ElectionForm extends React.Component {
     try {
 
       const ocd = await axios.get(`http://localhost:8080/ocd` + googleRequestMaker(this.state))
-      this.setState({ ocds: ocd.data })
+      this.setState({ electionData: ocd.data })
+      // const electionData = await axios.get(`http://localhost:8080/elections` + listOcd(Object.keys(ocd.data.divisions)))
+      // this.setState({ electionData: electionData.data })
     } catch (error) {
       console.error(error)
     }
